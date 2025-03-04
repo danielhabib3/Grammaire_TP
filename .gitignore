@@ -1,5 +1,7 @@
 mon_programme
 
+.vscode/
+
 # Prerequisites
 *.d
 
