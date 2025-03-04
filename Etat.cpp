@@ -13,6 +13,8 @@ bool E0::transition(Automate & automate, Symbole * s) {
             automate.transitionSimple(s, new E1);
             break;
         default:
+            automate.setErreur(true); 
+            cout << "ERREUR DE SYNTAXE : " << Etiquettes[*s] << " TROUVÉ ALORS QUE INT OU OPENPAR ATTENDUS." << endl; 
             break;
     }
     return false;
@@ -29,6 +31,10 @@ bool E1::transition(Automate & automate, Symbole * s) {
         case FIN:
             // Accepter
             return true;
+        default:
+            automate.setErreur(true); 
+            cout << "ERREUR DE SYNTAXE : " << Etiquettes[*s] << " TROUVÉ ALORS QUE PLUS, MULT OU FIN ATTENDUS." << endl; 
+            break;
     }
     return false;
 }
@@ -43,6 +49,10 @@ bool E2::transition(Automate & automate, Symbole * s) {
             break;
         case EXPR:
             automate.transitionSimple(s, new E6);
+            break;
+        default:
+            automate.setErreur(true); 
+            cout << "ERREUR DE SYNTAXE : " << Etiquettes[*s] << " TROUVÉ ALORS QUE INT OU OPENPAR ATTENDUS." << endl; 
             break;
     }
     return false;
@@ -60,6 +70,10 @@ bool E3::transition(Automate & automate, Symbole * s) {
             automate.reduction(1, res);
             delete e;
             break;
+        default:
+            automate.setErreur(true); 
+            cout << "ERREUR DE SYNTAXE : " << Etiquettes[*s] << " TROUVÉ ALORS QUE PLUS, MULT, CLOSEPAR OU FIN ATTENDUS." << endl; 
+            break;
     }
     return false;
 }
@@ -74,6 +88,10 @@ bool E4::transition(Automate & automate, Symbole * s) {
             break;
         case EXPR:
             automate.transitionSimple(s, new E7);
+            break;
+        default:
+            automate.setErreur(true); 
+            cout << "ERREUR DE SYNTAXE : " << Etiquettes[*s] << " TROUVÉ ALORS QUE INT OU OPENPAR ATTENDUS." << endl; 
             break;
     }
     return false;
@@ -90,6 +108,10 @@ bool E5::transition(Automate & automate, Symbole * s) {
         case EXPR:
             automate.transitionSimple(s, new E8);
             break;
+        default:
+            automate.setErreur(true); 
+            cout << "ERREUR DE SYNTAXE : " << Etiquettes[*s] << " TROUVÉ ALORS QUE INT OU OPENPAR ATTENDUS." << endl; 
+            break;
     }
     return false;
 }
@@ -104,6 +126,10 @@ bool E6::transition(Automate & automate, Symbole * s) {
             break;
         case CLOSEPAR:
             automate.decalage(s, new E9);
+            break;
+        default:
+            automate.setErreur(true); 
+            cout << "ERREUR DE SYNTAXE : " << Etiquettes[*s] << " TROUVÉ ALORS QUE PLUS, MULT OU CLOSEPAR ATTENDUS." << endl; 
             break;
     }
     return false;
@@ -128,6 +154,10 @@ bool E7::transition(Automate & automate, Symbole * s) {
         case MULT:
             automate.decalage(s, new E5);
             break;
+        default:
+            automate.setErreur(true); 
+            cout << "ERREUR DE SYNTAXE : " << Etiquettes[*s] << " TROUVÉ ALORS QUE PLUS, MULT, CLOSEPAR OU FIN ATTENDUS." << endl; 
+            break;
     }
     return false;
 }
@@ -149,6 +179,10 @@ bool E8::transition(Automate & automate, Symbole * s) {
 
             delete e1; delete e2; delete p;
             break;
+        default:
+            automate.setErreur(true); 
+            cout << "ERREUR DE SYNTAXE : " << Etiquettes[*s] << " TROUVÉ ALORS QUE PLUS, MULT, CLOSEPAR OU FIN ATTENDUS." << endl; 
+            break;
     }
     return false;
 }
@@ -166,6 +200,10 @@ bool E9::transition(Automate & automate, Symbole * s) {
             p2 = automate.popSymbole();
             automate.reduction(3, e);
             delete p1; delete p2;
+            break;
+        default:
+            automate.setErreur(true); 
+            cout << "ERREUR DE SYNTAXE : " << Etiquettes[*s] << " TROUVÉ ALORS QUE PLUS, MULT, CLOSEPAR OU FIN ATTENDUS." << endl; 
             break;
     }
     return false;

@@ -26,12 +26,24 @@ void Automate::reduction(int n, Symbole * s) {
     etats.back()->transition(*this, s);
 }
 
+Automate::~Automate() {
+    while (!symboles.empty()) {
+        delete symboles.back();
+        symboles.pop_back();
+    }
+
+    while (!etats.empty()) {
+        delete etats.back();
+        etats.pop_back();
+    }
+}
+
 void Automate::lecture() {
     Symbole * s = lexer->Consulter();
     etats.push_back(new E0());
     bool accept = false;
     int i = 0;
-    while(!etats.empty() && !accept) {
+    while(!etats.empty() && !accept && !erreur) {
         // print la pile des etats
         cout << "Pile des etats: ";
         for(auto it = etats.begin(); it != etats.end(); it++) {
@@ -74,15 +86,12 @@ void Automate::lecture() {
         cout << " ";
     }
     cout << endl;
-    cout << "Valeur de l'expression: " << ((Expr *) symboles.back())->getValue() << endl;
 
-    delete(etats.back());
-    etats.pop_back();
-    delete(etats.back());
-    etats.pop_back();
 
-    delete(symboles.back());
-    symboles.pop_back();
-    
+    if(symboles.size() == 1 && *s == EXPR) {
+        cout << "Valeur de l'expression: " << ((Expr *) symboles.back())->getValue() << endl;
+    }
+
+
     delete(s);
 }
