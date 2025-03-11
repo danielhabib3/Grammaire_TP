@@ -42,7 +42,7 @@ void Automate::lecture() {
     Symbole * s = lexer->Consulter();
     etats.push_back(new E0());
     bool accept = false;
-    int i = 0;
+    
     while(!etats.empty() && !accept && !erreur) {
         // print la pile des etats
         cout << "Pile des etats: ";
@@ -64,11 +64,7 @@ void Automate::lecture() {
         s = lexer->Consulter();
         
         cout << "Symbole suivant: " << Etiquettes[*s] << endl;
-        i++;
-        if(i > 20) {
-            cout << "Boucle infinie" << endl;
-            break;
-        }
+        
         cout << endl;
     }
 
