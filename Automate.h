@@ -11,9 +11,10 @@ using namespace std;
 
 class Etat;
 
+
 class Automate {
     public:
-        Automate(Lexer* l) : lexer(l), erreur(false) {};
+        Automate(Lexer* l, bool t, bool i) : lexer(l), erreur(false), trace(t), ignoreErrors(i) {};
         virtual ~Automate();
         void decalage(Symbole * s, Etat * e);
         void lecture();
@@ -29,4 +30,6 @@ class Automate {
         deque<Symbole *> symboles;
         deque<Etat *> etats;
         bool erreur;
+        bool trace;
+        bool ignoreErrors;
 };

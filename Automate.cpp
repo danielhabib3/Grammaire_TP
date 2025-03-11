@@ -44,46 +44,54 @@ void Automate::lecture() {
     bool accept = false;
     
     while(!etats.empty() && !accept && !erreur) {
-        // print la pile des etats
-        cout << "Pile des etats: ";
-        for(auto it = etats.begin(); it != etats.end(); it++) {
-            cout << (*it)->getName() << " ";
+        if(this->trace) {
+            // print la pile des etats
+            cout << "Pile des etats: ";
+            for(auto it = etats.begin(); it != etats.end(); it++) {
+                cout << (*it)->getName() << " ";
+            }
+            cout << endl;
+            // print la pile des symboles
+            cout << "Pile des symboles: ";
+            for(auto it = symboles.begin(); it != symboles.end(); it++) {
+                (*it)->Affiche();
+                cout << " ";
+            }
+            cout << endl;
+
+            cout << "Etat courant: " << etats.back()->getName() << " | Symbole courant : " << Etiquettes[*s] << endl;
         }
-        cout << endl;
-        // print la pile des symboles
+
+        accept = etats.back()->transition(*this, s);
+        
+        s = lexer->Consulter();
+        
+        if (this->trace) {
+            cout << "Symbole suivant: " << Etiquettes[*s] << endl;
+            cout << endl;
+        }
+        
+        
+        
+    }
+
+    if(accept) {
+        cout << "Accepté" << endl;
+    } else {
+        cout << "Refusé" << endl;
+    }
+
+    if(this->trace) {
         cout << "Pile des symboles: ";
         for(auto it = symboles.begin(); it != symboles.end(); it++) {
             (*it)->Affiche();
             cout << " ";
         }
         cout << endl;
-
-        cout << "Etat courant: " << etats.back()->getName() << " | Symbole : " << Etiquettes[*s] << endl;
-        accept = etats.back()->transition(*this, s);
-        
-        s = lexer->Consulter();
-        
-        cout << "Symbole suivant: " << Etiquettes[*s] << endl;
-        
-        cout << endl;
-    }
-
-    if(accept) {
-        cout << "Accepte" << endl;
-    } else {
-        cout << "Refuse" << endl;
     }
 
     cout << "Taille de la pile des symboles: " << symboles.size() << endl;
-    // print la pile des symboles
-    cout << "Pile des symboles: ";
-    for(auto it = symboles.begin(); it != symboles.end(); it++) {
-        (*it)->Affiche();
-        cout << " ";
-    }
-    cout << endl;
-
-
+    cout << "Etiquettes: " << Etiquettes[*s] << endl;
     if(symboles.size() == 1 && *s == EXPR) {
         cout << "Valeur de l'expression: " << ((Expr *) symboles.back())->getValue() << endl;
     }

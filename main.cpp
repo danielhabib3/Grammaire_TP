@@ -3,19 +3,32 @@
 #include "Automate.h"
 
 
-int main(void) {
+
+int main(int argc, char **argv) {
    string chaine("(1+34)*123");
+
+   bool t = false;
+   bool i = false;
+
+   if(argc > 1) {
+      for(int i = 1; i < argc; i++) {
+         if(string(argv[i]) == "-t") {
+            t = true;
+         }
+         if(string(argv[i]) == "-i") {
+            i = true;
+         }
+         else {
+            chaine = string(argv[i]);
+            cout << "UNKNOWN OPTION: " << argv[i] << endl;
+         }
+      }
+   }
+
 
    Lexer l(chaine);
 
-   // Symbole * s;
-   // while(*(s=l.Consulter())!=FIN) {
-   //    s->Affiche();
-   //    cout<<endl;
-   //    l.Avancer();
-   // }
-
-   Automate a(&l);
+   Automate a(&l, t, i);
    a.lecture();
    return 0;
 }
