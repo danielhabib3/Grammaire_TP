@@ -90,9 +90,8 @@ void Automate::lecture() {
         cout << endl;
     }
 
-    cout << "Taille de la pile des symboles: " << symboles.size() << endl;
-    cout << "Etiquettes: " << Etiquettes[*s] << endl;
-    if(symboles.size() == 1 && *s == EXPR) {
+    
+    if(symboles.size() == 1 && *s == FIN) {
         cout << "Valeur de l'expression: " << ((Expr *) symboles.back())->getValue() << endl;
     }
 

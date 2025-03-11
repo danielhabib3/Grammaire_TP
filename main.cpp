@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
          if(string(argv[i]) == "-t") {
             t = true;
          }
-         if(string(argv[i]) == "-i") {
+         else if(string(argv[i]) == "-i") {
             i = true;
          }
          else {
