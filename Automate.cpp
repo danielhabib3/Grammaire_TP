@@ -102,7 +102,7 @@ void Automate::lecture() {
     }
 
     if(positionErrors.size() > 0) {
-        cout << "Erreur(s) de syntaxe trouvée(s) : " << endl;
+        cout << positionErrors.size() << " Erreur(s) de syntaxe trouvée(s) : " << endl;
         for(auto it = positionErrors.begin(); it != positionErrors.end(); it++) {
             cout << "    Erreur à la position " << it->first << ", " << (it->second)[0] << " trouvé alors que ";
             for(int j = 1; j < static_cast<int>(it->second.size()); j++) {

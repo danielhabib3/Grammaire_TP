@@ -248,17 +248,28 @@ void test_invalid_5(bool ignoreError) {
 
 // Fonction pour exécuter tous les tests
 void runTests(bool ignoreError) {
-    cout << "===== Running All Tests =====" << endl;
-    test_valid_1(ignoreError);
-    test_valid_2(ignoreError);
-    test_valid_3(ignoreError);
-    test_valid_4(ignoreError);
-    test_valid_5(ignoreError);
-    test_valid_6(ignoreError);
-    test_valid_8(ignoreError);
-    test_valid_9(ignoreError);
-    test_valid_10(ignoreError);
-    cout << "===== All tests completed! =====" << endl;
+   cout << "===== Running All Tests =====" << endl;
+   test_valid_1(ignoreError);
+   test_valid_2(ignoreError);
+   test_valid_3(ignoreError);
+   test_valid_4(ignoreError);
+   test_valid_5(ignoreError);
+   test_valid_6(ignoreError);
+   test_valid_8(ignoreError);
+   test_valid_9(ignoreError);
+   test_valid_10(ignoreError);
+   cout << "===== All tests completed! =====" << endl;
+   // to add
+   // "()1**2)"
+   // "+()1**2)"
+   // "(1**2)++3"
+   // "1**2"
+   // "1++2"
+   // "1+2("
+   // "(1+2)("
+   // "1*2("
+   // "(1*2)("
+   // "(1+2()"
 }
 
 int main(int argc, char **argv) {

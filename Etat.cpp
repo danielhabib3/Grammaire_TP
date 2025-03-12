@@ -12,10 +12,23 @@ bool E0::transition(Automate & automate, Symbole * s) {
         case EXPR:
             automate.transitionSimple(s, new E1);
             break;
-        default:
+        case FIN:
             automate.setErreur(true);
+            automate.addErreur(automate.getLexer()->getTete()+1, vector<string>({Etiquettes[*s], "INT", "OPENPAR"}));
+            if(automate.getTrace())    
+                cout << "ERREUR DE SYNTAXE [E0] : " << Etiquettes[*s] << " TROUVÉ ALORS QUE INT OU OPENPAR ATTENDUS." << endl; 
+            break;
+        default:
+            automate.addErreur(automate.getLexer()->getTete(), vector<string>({Etiquettes[*s], "INT", "OPENPAR"}));
             if(automate.getTrace())
                 cout << "ERREUR DE SYNTAXE [E0] : " << Etiquettes[*s] << " TROUVÉ ALORS QUE INT OU OPENPAR ATTENDUS." << endl; 
+
+            if(automate.getIgnoreErrors()) {
+                automate.getLexer()->Avancer();
+                delete s;
+            } else {
+                automate.setErreur(true);
+            }
             break;
     }
     return false;
@@ -33,9 +46,16 @@ bool E1::transition(Automate & automate, Symbole * s) {
             // Accepter
             return true;
         default:
-            automate.setErreur(true); 
+            automate.addErreur(automate.getLexer()->getTete(), vector<string>({Etiquettes[*s], "PLUS", "MULT", "FIN"}));
             if(automate.getTrace())
                 cout << "ERREUR DE SYNTAXE [E1] : " << Etiquettes[*s] << " TROUVÉ ALORS QUE PLUS, MULT OU FIN ATTENDUS." << endl; 
+
+            if(automate.getIgnoreErrors()) {
+                automate.getLexer()->Avancer();
+                delete s;
+            } else {
+                automate.setErreur(true);
+            }
             break;
     }
     return false;
@@ -52,10 +72,23 @@ bool E2::transition(Automate & automate, Symbole * s) {
         case EXPR:
             automate.transitionSimple(s, new E6);
             break;
+        case FIN:
+            automate.setErreur(true);
+            automate.addErreur(automate.getLexer()->getTete()+1, vector<string>({Etiquettes[*s], "INT", "OPENPAR"}));
+            if(automate.getTrace())    
+                cout << "ERREUR DE SYNTAXE [E2] : " << Etiquettes[*s] << " TROUVÉ ALORS QUE INT OU OPENPAR ATTENDUS." << endl; 
+            break;
         default:
-            automate.setErreur(true); 
+            automate.addErreur(automate.getLexer()->getTete(), vector<string>({Etiquettes[*s], "INT", "OPENPAR"}));
             if(automate.getTrace())
                 cout << "ERREUR DE SYNTAXE [E2] : " << Etiquettes[*s] << " TROUVÉ ALORS QUE INT OU OPENPAR ATTENDUS." << endl; 
+
+            if(automate.getIgnoreErrors()) {
+                automate.getLexer()->Avancer();
+                delete s;
+            } else {
+                automate.setErreur(true);
+            }
             break;
     }
     return false;
@@ -74,7 +107,14 @@ bool E3::transition(Automate & automate, Symbole * s) {
             delete e;
             break;
         default:
-            automate.setErreur(true);
+            if(automate.getIgnoreErrors()) {
+                res = new Expr(e->getValue());
+                automate.reduction(1, res);
+                delete e;
+            } else {
+                automate.setErreur(true);
+            }
+            automate.addErreur(automate.getLexer()->getTete(), vector<string>({Etiquettes[*s], "PLUS", "MULT", "CLOSEPAR", "FIN"}));
             if(automate.getTrace())
                 cout << "ERREUR DE SYNTAXE [E3] : " << Etiquettes[*s] << " TROUVÉ ALORS QUE PLUS, MULT, CLOSEPAR OU FIN ATTENDUS." << endl; 
             break;
@@ -95,7 +135,7 @@ bool E4::transition(Automate & automate, Symbole * s) {
             break;
         case FIN:
             automate.setErreur(true);
-            automate.addErreur(automate.getLexer()->getTete(), vector<string>({Etiquettes[*s], "INT", "OPENPAR"}));
+            automate.addErreur(automate.getLexer()->getTete()+1, vector<string>({Etiquettes[*s], "INT", "OPENPAR"}));
             if(automate.getTrace())    
                 cout << "ERREUR DE SYNTAXE [E4] : " << Etiquettes[*s] << " TROUVÉ ALORS QUE INT OU OPENPAR ATTENDUS." << endl; 
             break;
@@ -126,10 +166,23 @@ bool E5::transition(Automate & automate, Symbole * s) {
         case EXPR:
             automate.transitionSimple(s, new E8);
             break;
+        case FIN:
+            automate.setErreur(true);
+            automate.addErreur(automate.getLexer()->getTete()+1, vector<string>({Etiquettes[*s], "INT", "OPENPAR"}));
+            if(automate.getTrace())    
+                cout << "ERREUR DE SYNTAXE [E5] : " << Etiquettes[*s] << " TROUVÉ ALORS QUE INT OU OPENPAR ATTENDUS." << endl; 
+            break;
         default:
-            automate.setErreur(true); 
+            automate.addErreur(automate.getLexer()->getTete(), vector<string>({Etiquettes[*s], "INT", "OPENPAR"}));
             if(automate.getTrace())
                 cout << "ERREUR DE SYNTAXE [E5] : " << Etiquettes[*s] << " TROUVÉ ALORS QUE INT OU OPENPAR ATTENDUS." << endl; 
+
+            if(automate.getIgnoreErrors()) {
+                automate.getLexer()->Avancer();
+                delete s;
+            } else {
+                automate.setErreur(true);
+            }
             break;
     }
     return false;
@@ -146,7 +199,21 @@ bool E6::transition(Automate & automate, Symbole * s) {
         case CLOSEPAR:
             automate.decalage(s, new E9);
             break;
-        default:
+        case OPENPAR:
+        case INT:
+            automate.addErreur(automate.getLexer()->getTete(), vector<string>({Etiquettes[*s], "PLUS", "MULT", "CLOSEPAR"}));
+            if(automate.getTrace())
+                cout << "ERREUR DE SYNTAXE [E6] : " << Etiquettes[*s] << " TROUVÉ ALORS QUE PLUS, MULT OU CLOSEPAR ATTENDUS." << endl; 
+
+            if(automate.getIgnoreErrors()) {
+                automate.getLexer()->Avancer();
+                delete s;
+            } else {
+                automate.setErreur(true);
+            }
+            break;
+        default: // case FIN
+            automate.addErreur(automate.getLexer()->getTete(), vector<string>({Etiquettes[*s], "PLUS", "MULT", "CLOSEPAR"}));
             automate.setErreur(true); 
             if(automate.getTrace())
                 cout << "ERREUR DE SYNTAXE [E6] : " << Etiquettes[*s] << " TROUVÉ ALORS QUE PLUS, MULT OU CLOSEPAR ATTENDUS." << endl; 
@@ -175,7 +242,19 @@ bool E7::transition(Automate & automate, Symbole * s) {
             automate.decalage(s, new E5);
             break;
         default:
-            automate.setErreur(true); 
+            if(automate.getIgnoreErrors()) {
+                e1 = (Expr *) automate.popSymbole();
+                p = automate.popSymbole();
+                e2 = (Expr *) automate.popSymbole();
+
+                res = new Expr(e1->getValue() + e2->getValue());
+                automate.reduction(3, (Symbole *) res);
+
+                delete e1; delete e2; delete p;
+            } else {
+                automate.setErreur(true); 
+            }
+            automate.addErreur(automate.getLexer()->getTete(), vector<string>({Etiquettes[*s], "PLUS", "MULT", "CLOSEPAR", "FIN"}));
             if(automate.getTrace())
                 cout << "ERREUR DE SYNTAXE [E7] : " << Etiquettes[*s] << " TROUVÉ ALORS QUE PLUS, MULT, CLOSEPAR OU FIN ATTENDUS." << endl; 
             break;
@@ -201,7 +280,19 @@ bool E8::transition(Automate & automate, Symbole * s) {
             delete e1; delete e2; delete p;
             break;
         default:
-            automate.setErreur(true); 
+            if(automate.getIgnoreErrors()) {
+                e1 = (Expr *) automate.popSymbole();
+                p = automate.popSymbole();
+                e2 = (Expr *) automate.popSymbole();
+
+                res = new Expr(e1->getValue() * e2->getValue());
+                automate.reduction(3, (Symbole *) res);
+
+                delete e1; delete e2; delete p;
+            } else {
+                automate.setErreur(true); 
+            }
+            automate.addErreur(automate.getLexer()->getTete(), vector<string>({Etiquettes[*s], "PLUS", "MULT", "CLOSEPAR", "FIN"}));
             if(automate.getTrace())
                 cout << "ERREUR DE SYNTAXE [E8] : " << Etiquettes[*s] << " TROUVÉ ALORS QUE PLUS, MULT, CLOSEPAR OU FIN ATTENDUS." << endl; 
             break;
@@ -224,9 +315,18 @@ bool E9::transition(Automate & automate, Symbole * s) {
             delete p1; delete p2;
             break;
         default:
-            automate.setErreur(true); 
+            if(automate.getIgnoreErrors()) {
+                p1 = automate.popSymbole();
+                e = (Expr *) automate.popSymbole();
+                p2 = automate.popSymbole();
+                automate.reduction(3, e);
+                delete p1; delete p2;
+            } else {
+                automate.setErreur(true); 
+            }
+            automate.addErreur(automate.getLexer()->getTete(), vector<string>({Etiquettes[*s], "PLUS", "MULT", "CLOSEPAR", "FIN"}));
             if(automate.getTrace())
-                cout << "ERREUR DE SYNTAXE [E9] : " << Etiquettes[*s] << " TROUVÉ ALORS QUE PLUS, MULT, CLOSEPAR OU FIN ATTENDUS." << endl; 
+                cout << "ERREUR DE SYNTAXE [E9] : " << Etiquettes[*s] << " TROUVÉ ALORS QUE PLUS, MULT, CLOSEPAR OU FIN ATTENDUS." << endl;
             break;
     }
     return false;
