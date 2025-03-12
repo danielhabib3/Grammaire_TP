@@ -8,6 +8,11 @@ Symbole* Automate::popSymbole() {
 }
 
 void Automate::decalage(Symbole * s, Etat * e) {
+    if(*s == INT) {
+        chaineLue += to_string(((Entier *) s)->getValue());
+    } else {
+        chaineLue += Etiquettes2[*s];
+    }
     symboles.push_back(s);
     etats.push_back(e);
     lexer->Avancer();
@@ -93,6 +98,24 @@ void Automate::lecture() {
     
     if(symboles.size() == 1 && *s == FIN) {
         cout << "Valeur de l'expression: " << ((Expr *) symboles.back())->getValue() << endl;
+        cout << "Expression evaluée: " << chaineLue << endl;
+    }
+
+    if(positionErrors.size() > 0) {
+        cout << "Erreur(s) de syntaxe trouvée(s) : " << endl;
+        for(auto it = positionErrors.begin(); it != positionErrors.end(); it++) {
+            cout << "    Erreur à la position " << it->first << ", " << (it->second)[0] << " trouvé alors que ";
+            for(int j = 1; j < static_cast<int>(it->second.size()); j++) {
+                cout << (it->second)[j];
+                if(j == static_cast<int>(it->second.size()-2)) {
+                    cout << " OU ";
+                } else if(j == static_cast<int>(it->second.size()-1)) {
+                    cout << " attendus." << endl;
+                } else {
+                    cout << ", ";
+                }
+            }
+        }
     }
 
 
