@@ -262,73 +262,56 @@ void runTests(bool ignoreError) {
 }
 
 int main(int argc, char **argv) {
-   string chaine("(1++34)++123");
-
+   
    bool t = false;
    bool i = false;
+   bool runTestsFlag = false;
+   bool execFlag = false;
+   string chaine = "(1+34)*123"; // Expression par défaut
 
-   if(argc > 1) {
-      for(int j = 1; j < argc; j++) {
-         if(string(argv[j]) == "-t") {
+   if (argc > 1) {
+      for (int j = 1; j < argc; j++) {
+         string arg = argv[j];
+
+         if (arg == "-t") {
             t = true;
-         }
-         else if(string(argv[j]) == "-i") {
+         } else if (arg == "-i") {
             i = true;
-         }
-         else {
-            cout << "UNKNOWN OPTION: " << argv[j] << endl;
+         } else if (arg == "-test") {
+            runTestsFlag = true;
+         } else if (arg == "-exec") {
+            if (j + 1 < argc) { // Vérifier qu'une expression suit -exec
+               chaine = argv[j + 1];
+               execFlag = true;
+               j++; // Ignorer l'argument suivant (l'expression)
+            } else {
+               cout << "ERROR: -exec requires an expression as an argument!" << endl;
+               return 1; // Code d'erreur
+            }
+         } else {
+            cout << "UNKNOWN OPTION: " << arg << endl;
+            return 1; // Code d'erreur
          }
       }
    }
-    bool t = false;
-    bool i = false;
-    bool runTestsFlag = false;
-    bool execFlag = false;
-    string chaine = "(1+34)*123"; // Expression par défaut
 
-    if (argc > 1) {
-        for (int j = 1; j < argc; j++) {
-            string arg = argv[j];
+   // Soit -test, soit -exec, mais pas les deux
+   if (runTestsFlag && execFlag) {
+      cout << "ERROR: Cannot use both -test and -exec at the same time!" << endl;
+      return 1; // Code d'erreur
+   }
 
-            if (arg == "-t") {
-                t = true;
-            } else if (arg == "-i") {
-                i = true;
-            } else if (arg == "-test") {
-                runTestsFlag = true;
-            } else if (arg == "-exec") {
-                if (j + 1 < argc) { // Vérifier qu'une expression suit -exec
-                    chaine = argv[j + 1];
-                    execFlag = true;
-                    j++; // Ignorer l'argument suivant (l'expression)
-                } else {
-                    cout << "ERROR: -exec requires an expression as an argument!" << endl;
-                    return 1; // Code d'erreur
-                }
-            } else {
-                cout << "UNKNOWN OPTION: " << arg << endl;
-                return 1; // Code d'erreur
-            }
-        }
-    }
+   // Exécution des tests
+   if (runTestsFlag) {
+      runTests(i);
+      return 0;
+   }
 
-    // Soit -test, soit -exec, mais pas les deux
-    if (runTestsFlag && execFlag) {
-        cout << "ERROR: Cannot use both -test and -exec at the same time!" << endl;
-        return 1; // Code d'erreur
-    }
+   // Exécution de l'analyse d'expression
+   cout << "Processing expression: " << chaine << endl;
+   Lexer l(chaine);
+   Automate a(&l, t, i);
+   a.lecture();
 
-    // Exécution des tests
-    if (runTestsFlag) {
-        runTests(i);
-        return 0;
-    }
-
-    // Exécution de l'analyse d'expression
-    cout << "Processing expression: " << chaine << endl;
-    Lexer l(chaine);
-    Automate a(&l, t, i);
-    a.lecture();
-
-    return 0;
+   return 0;
 }
