@@ -33,7 +33,7 @@ make
 
 ### Exécution
 
-#### Mode standard :
+#### Mode standard : exécution de l'expression arithmétique par défaut du TP : (1+34)*123
 ```sh
 ./mon_programme
 ```
@@ -61,6 +61,10 @@ make
 ```sh
 ./mon_programme -i -exec "(4++5)*6"
 ```
+
+Vous pouvez également combiner les options `-t` et `-i` pour afficher les traces et ignorer les erreurs.
+
+Mais vous ne pouvez pas combiner les options `-test` et `-exec`.
 
 ## Exemples d'entrées invalides
 
