@@ -273,6 +273,18 @@ void runTests(bool ignoreError) {
 }
 
 int main(int argc, char **argv) {
+
+   if(argc == 2 && argv[1] == "-help") {
+      cout << "Usage: " << argv[0] << " [options]" << endl;
+      cout << "Options:" << endl;
+      cout << "  -help          Display this help message" << endl;
+      cout << "  -t             Enable verbose mode (trace transitions)" << endl;
+      cout << "  -i             Ignore errors and continue parsing" << endl;
+      cout << "  -test          Run all tests" << endl;
+      cout << "  -exec <expr>   Execute the given arithmetic expression" << endl;
+      cout << "                 But <expr> has to be between \"\"" << endl;
+      return 0;
+   }
    
    bool t = false;
    bool i = false;

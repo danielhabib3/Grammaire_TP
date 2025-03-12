@@ -37,6 +37,10 @@ make
 ```sh
 ./mon_programme
 ```
+#### Affichage de toutes les options disponibles :
+```sh
+./mon_programme -help
+```
 
 #### Analyse d’une expression spécifique (Il faut mettre l'expression entre guillemets) :
 ```sh
