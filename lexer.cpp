@@ -39,6 +39,7 @@ Symbole * Lexer::Consulter() {
                }
                else {
                   tampon = new Symbole(ERREUR);
+                  tete++;
                }
          }
       }
