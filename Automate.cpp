@@ -95,6 +95,14 @@ void Automate::lecture() {
         cout << endl;
     }
 
+    if(symboles.size() > 1 && *s == FIN && parentesesFermantesManquantes && ignoreErrors) {
+        cout << "Valeur de l'expression: " << ((Expr *) symboles.back())->getValue() << endl;
+        cout << "Expression evaluée: " << chaineLue;
+        for(int k = 0; k < static_cast<int>(symboles.size()-1); k++) {
+            cout << ")";
+        }
+        cout << endl;
+    }
     
     if(symboles.size() == 1 && *s == FIN) {
         cout << "Valeur de l'expression: " << ((Expr *) symboles.back())->getValue() << endl;

@@ -35,6 +35,7 @@ class Automate {
         void setChaineLue(string c) {chaineLue = c;};
         void addErreur(int pos, vector<string> symboles) {positionErrors[pos] = symboles;};
         bool getTrace() {return trace;};
+        void setParentesesFermantesManquantes(bool p) {parentesesFermantesManquantes = p;};
     
     private:
         Lexer * lexer;
@@ -47,4 +48,5 @@ class Automate {
         // La clé c'est la position de l'erreur et la valeur c'est une liste de symboles
         // le premier de la liste c'est le symbole trouvé et les autres ce sont les symbole attendus
         map<int,vector<string>> positionErrors;
+        bool parentesesFermantesManquantes;
 };

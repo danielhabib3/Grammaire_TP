@@ -212,9 +212,10 @@ bool E6::transition(Automate & automate, Symbole * s) {
                 automate.setErreur(true);
             }
             break;
-        default: // case FIN
-            automate.addErreur(automate.getLexer()->getTete(), vector<string>({Etiquettes[*s], "PLUS", "MULT", "CLOSEPAR"}));
-            automate.setErreur(true); 
+        case FIN:
+            automate.addErreur(automate.getLexer()->getTete()+1, vector<string>({Etiquettes[*s], "PLUS", "MULT", "CLOSEPAR"}));
+            automate.setErreur(true);
+            automate.setParentesesFermantesManquantes(true);
             if(automate.getTrace())
                 cout << "ERREUR DE SYNTAXE [E6] : " << Etiquettes[*s] << " TROUVÉ ALORS QUE PLUS, MULT OU CLOSEPAR ATTENDUS." << endl; 
             break;
