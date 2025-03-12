@@ -274,7 +274,7 @@ void runTests(bool ignoreError) {
 
 int main(int argc, char **argv) {
 
-   if(argc == 2 && argv[1] == "-help") {
+   if(argc == 2 && string(argv[1]) == "-help") {
       cout << "Usage: " << argv[0] << " [options]" << endl;
       cout << "Options:" << endl;
       cout << "  -help          Display this help message" << endl;
