@@ -86,7 +86,7 @@ Exemple :
 Erreur à la position 2 : ')' trouvé alors que 'INT' attendu.
 ```
 
-## Auteur
-
+## Auteurs
+Groupe 3 H4231
 Projet réalisé par LEVRARD Thomas, SOW Amadou et HABIB Danial.
 
