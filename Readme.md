@@ -62,6 +62,9 @@ make
 
 Dans ce cas là "(4++5)*6" si on ne met pas l'option -i, le programme s'arrete à la première erreur syntaxique rencontrée. Si on met l'option -i, le programme continue l'analyse de l'expression jusqu'à la fin en ignorant le deuxième +. Le programme affiche les erreurs rencontrées ainsi que l'expression qui a été évaluée.
 
+Dans les cas où il y a des erreurs et que l'option -i est activée, le programme affiche les erreurs rencontrées et l'expression qui a été évaluée.
+La logique qu'on a utilisé est la suivante : si une erreur est rencontrée, on continue l'analyse de l'expression jusqu'à la fin en ignorant les erreurs rencontrées. Si l'expression est correcte, on l'évalue.
+
 ## Exemples d'entrées valides
 
 - `(5+3)*2`
