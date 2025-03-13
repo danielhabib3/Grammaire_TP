@@ -59,7 +59,7 @@ make
 ```sh
 ./mon_programme -test
 ```
-**remarques** Les tests sont executés automatiquement avec l'option '-i', même si vous ne la choisissez pas```
+Les tests sont executés automatiquement avec l'option `-i`, même si vous ne la choisissez pas```
 
 #### Remarques
 
@@ -67,7 +67,7 @@ Vous pouvez également combiner les options `-t` et `-i` pour afficher les trace
 
 Mais vous ne pouvez pas combiner les options `-test` et `-exec`.
 
-De plus, les tests sont toujours executés sans l'option '-t' (car sinon cela générerait trop de texte (38 tests)) et avec l'option '-i'. 
+De plus, les tests sont toujours executés sans l'option `-t` (car sinon cela générerait trop de texte (38 tests)) et avec l'option `-i`. 
 
 ## Choix dans le traitement des expressions arithmétiques avec erreur(s) de syntaxe (-i)
 
@@ -75,7 +75,7 @@ De plus, les tests sont toujours executés sans l'option '-t' (car sinon cela g�
 
 Si l'expression arithmétique est syntaxiquement incorrecte alors le programme arrête l'analyse à la première erreur et affiche une erreur
 
-**Exemples :** "(4++5)*6" est syntaxiquement incorrecte car il y a deux '+' qui se suivent
+**Exemples :** "(4++5)*6" est syntaxiquement incorrecte car il y a deux **+** qui se suivent
 
 ### Avec l'option -i
 
@@ -83,14 +83,16 @@ Si on met l'option -i, le programme continue l'analyse de l'expression jusqu'à 
 
 **Exemples :** "(4++5)*6" :
 
-Processing expression: (4++5)*6 <br/>
-Accepté <br/>
-Valeur de l'expression: 54  <br/>
-Expression evaluée: (4+5)*6 <br/>
-1 Erreur(s) de syntaxe trouvée(s) : <br/>
+```
+Processing expression: (4++5)*6 
+Accepté 
+Valeur de l'expression: 54  
+Expression evaluée: (4+5)*6 
+1 Erreur(s) de syntaxe trouvée(s) : 
 Erreur à la position 4, PLUS trouvé alors que INT OU OPENPAR attendus. 
+```
 
-#### Erreurs syntaxiques traitées et choix (cf : Tests)
+### Erreurs syntaxiques traitées et choix (cf : Tests)
 
 | Description erreur traitée                                       | Choix réalisé pour continuer l'analyse        | Exemple entrée        | Résultat attendu            |
 |----------------------------------------------------------------|----------------------------------------|----------------|--------------------|
@@ -105,7 +107,7 @@ Erreur à la position 4, PLUS trouvé alors que INT OU OPENPAR attendus.
 | Opérateur en début d'expression et parenthèse fermante en trop et double opérateur | Ignorer l'opérateur en début d'expression  et la parenthèse fermante en trop | `+()1**2)`     | `(1*2) = 2`        |
 
 
-#### Exemples d'erreurs non traitées (même avec -i)
+### Exemples d'erreurs non traitées (même avec -i)
 
 | Description erreur non traitée                              | Exemple entrée| Résultat attendu         |
 |----------------------------------------------------|----------|--------------------|
