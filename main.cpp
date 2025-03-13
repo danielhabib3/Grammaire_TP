@@ -6,7 +6,7 @@ using namespace std;
 
 void test_valid_1(bool ignoreError) {
    string testInput = "(5+3)*2";
-   cout << "==== Running test1 : ====" << endl;
+   cout << "==== Running test valid 1 : ====" << endl;
 
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
@@ -20,7 +20,7 @@ void test_valid_1(bool ignoreError) {
 
 void test_valid_2(bool ignoreError) {
    string testInput = "1+2*3";
-   cout << "==== Running test2 : ====" << endl;
+   cout << "==== Running test valid 2 : ====" << endl;
 
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
@@ -34,7 +34,7 @@ void test_valid_2(bool ignoreError) {
 
 void test_valid_3(bool ignoreError) {
    string testInput = "10+20*30";
-   cout << "==== Running test3 : ====" << endl;
+   cout << "==== Running test valid 3 : ====" << endl;
 
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
@@ -48,7 +48,7 @@ void test_valid_3(bool ignoreError) {
 
 void test_valid_4(bool ignoreError) {
    string testInput = "(8*3)+4";
-   cout << "==== Running test4 : ====" << endl;
+   cout << "==== Running test valid 4 : ====" << endl;
 
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
@@ -62,7 +62,7 @@ void test_valid_4(bool ignoreError) {
 
 void test_valid_5(bool ignoreError) {
    string testInput = "7*(6+5)";
-   cout << "==== Running test5 : ====" << endl;
+   cout << "==== Running test valid 5 : ====" << endl;
 
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
@@ -76,7 +76,7 @@ void test_valid_5(bool ignoreError) {
 
 void test_valid_6(bool ignoreError) {
    string testInput = "((1+2)*3)";
-   cout << "==== Running test6 : ====" << endl;
+   cout << "==== Running test valid 6 : ====" << endl;
 
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
@@ -90,7 +90,7 @@ void test_valid_6(bool ignoreError) {
 
 void test_valid_8(bool ignoreError) {
    string testInput = "(4+5)*6";
-   cout << "==== Running test8 : ====" << endl;
+   cout << "==== Running test valid 8 : ====" << endl;
 
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
@@ -104,7 +104,7 @@ void test_valid_8(bool ignoreError) {
 
 void test_valid_9(bool ignoreError) {
    string testInput = "2*(3+4*5)";
-   cout << "==== Running test9 : ====" << endl;
+   cout << "==== Running test valid 9 : ====" << endl;
 
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
@@ -118,7 +118,7 @@ void test_valid_9(bool ignoreError) {
 
 void test_valid_10(bool ignoreError) {
    string testInput = "(1+(2*(3+(4*(5+(6*7))))))";
-   cout << "==== Running test10 : ====" << endl;
+   cout << "==== Running test valid 10 : ====" << endl;
 
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
@@ -132,7 +132,7 @@ void test_valid_10(bool ignoreError) {
 
 void test_valid_11(bool ignoreError) {
    string testInput = "(((3+2)))";
-   cout << "==== Running test14 : ====" << endl;
+   cout << "==== Running test valid 11 : ====" << endl;
 
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
@@ -141,12 +141,12 @@ void test_valid_11(bool ignoreError) {
    automate.lecture();
 
    cout << "Attendu : 5" << endl;
-   cout << "==== Test14 finished ====" << endl << endl;
+   cout << "==== Test11 finished ====" << endl << endl;
 }
 
 void test_valid_12(bool ignoreError) {
    string testInput = "2+3*4+5*6";
-   cout << "==== Running test12 : ====" << endl;
+   cout << "==== Running test valid 12 : ====" << endl;
 
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
@@ -160,7 +160,7 @@ void test_valid_12(bool ignoreError) {
 
 void test_valid_13(bool ignoreError) {
    string testInput = "2+3*4+5*6";
-   cout << "==== Running test13 : ====" << endl;
+   cout << "==== Running test valid 13 : ====" << endl;
 
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
@@ -174,7 +174,7 @@ void test_valid_13(bool ignoreError) {
 
 void test_valid_ignoreErrors_14(bool ignoreError) {
    string testInput = "+()1**2)";
-   cout << "==== Running test14 : ====" << endl;
+   cout << "==== Running test ignoreError 14 : ====" << endl;
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
    cout << "Processing expression: " << testInput << endl;
@@ -185,7 +185,7 @@ void test_valid_ignoreErrors_14(bool ignoreError) {
 
 void test_valid_ignoreErrors_15(bool ignoreError) {
    string testInput = "(1**2)++3";
-   cout << "==== Running test15 : ====" << endl;
+   cout << "==== Running test ignoreError 15 : ====" << endl;
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
    cout << "Processing expression: " << testInput << endl;
@@ -196,7 +196,7 @@ void test_valid_ignoreErrors_15(bool ignoreError) {
 
 void test_valid_ignoreErrors_16(bool ignoreError) {
    string testInput = "1**2";
-   cout << "==== Running test16 : ====" << endl;
+   cout << "==== Running test ignoreError 16 : ====" << endl;
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
    cout << "Processing expression: " << testInput << endl;
@@ -207,7 +207,7 @@ void test_valid_ignoreErrors_16(bool ignoreError) {
 
 void test_valid_ignoreErrors_17(bool ignoreError) {
    string testInput = "1++2";
-   cout << "==== Running test17 : ====" << endl;
+   cout << "==== Running test ignoreError 17 : ====" << endl;
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
    cout << "Processing expression: " << testInput << endl;
@@ -218,7 +218,7 @@ void test_valid_ignoreErrors_17(bool ignoreError) {
 
 void test_valid_ignoreErrors_18(bool ignoreError) {
    string testInput = "1+2(";
-   cout << "==== Running test18 : ====" << endl;
+   cout << "==== Running test ignoreError 18 : ====" << endl;
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
    cout << "Processing expression: " << testInput << endl;
@@ -229,7 +229,7 @@ void test_valid_ignoreErrors_18(bool ignoreError) {
 
 void test_valid_ignoreErrors_19(bool ignoreError) {
    string testInput = "(1+2)(";
-   cout << "==== Running test19 : ====" << endl;
+   cout << "==== Running test ignoreError 19 : ====" << endl;
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
    cout << "Processing expression: " << testInput << endl;
@@ -240,7 +240,7 @@ void test_valid_ignoreErrors_19(bool ignoreError) {
 
 void test_valid_ignoreErrors_20(bool ignoreError) {
    string testInput = "1*2(";
-   cout << "==== Running test20 : ====" << endl;
+   cout << "==== Running test ignoreError 20 : ====" << endl;
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
    cout << "Processing expression: " << testInput << endl;
@@ -251,7 +251,7 @@ void test_valid_ignoreErrors_20(bool ignoreError) {
 
 void test_valid_ignoreErrors_21(bool ignoreError) {
    string testInput = "(1*2)(";
-   cout << "==== Running test21 : ====" << endl;
+   cout << "==== Running test ignoreError 21 : ====" << endl;
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
    cout << "Processing expression: " << testInput << endl;
@@ -262,7 +262,7 @@ void test_valid_ignoreErrors_21(bool ignoreError) {
 
 void test_valid_ignoreErrors_22(bool ignoreError) {
    string testInput = "(1+2()";
-   cout << "==== Running test22 : ====" << endl;
+   cout << "==== Running test ignoreError 22 : ====" << endl;
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
    cout << "Processing expression: " << testInput << endl;
@@ -273,7 +273,7 @@ void test_valid_ignoreErrors_22(bool ignoreError) {
 
 void test_valid_ignoreErrors_23(bool ignoreError) {
    string testInput = "(1*2()";
-   cout << "==== Running test23 : ====" << endl;
+   cout << "==== Running test ignoreError 23 : ====" << endl;
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
    cout << "Processing expression: " << testInput << endl;
@@ -284,7 +284,7 @@ void test_valid_ignoreErrors_23(bool ignoreError) {
 
 void test_valid_ignoreErrors_24(bool ignoreError) {
    string testInput = "(1+2y)";
-   cout << "==== Running test24 : ====" << endl;
+   cout << "==== Running test ignoreError 24 : ====" << endl;
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
    cout << "Processing expression: " << testInput << endl;
@@ -295,7 +295,7 @@ void test_valid_ignoreErrors_24(bool ignoreError) {
 
 void test_valid_ignoreErrors_25(bool ignoreError) {
    string testInput = "(1*y2)";
-   cout << "==== Running test25 : ====" << endl;
+   cout << "==== Running test ignoreError 25 : ====" << endl;
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
    cout << "Processing expression: " << testInput << endl;
@@ -306,7 +306,7 @@ void test_valid_ignoreErrors_25(bool ignoreError) {
 
 void test_valid_ignoreErrors_26(bool ignoreError) {
    string testInput = "((1+2";
-   cout << "==== Running test26 : ====" << endl;
+   cout << "==== Running test ignoreError 26 : ====" << endl;
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
    cout << "Processing expression: " << testInput << endl;
@@ -317,7 +317,7 @@ void test_valid_ignoreErrors_26(bool ignoreError) {
 
 void test_valid_ignoreErrors_27(bool ignoreError) {
    string testInput = "(1+2";
-   cout << "==== Running test27 : ====" << endl;
+   cout << "==== Running test ignoreError 27 : ====" << endl;
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
    cout << "Processing expression: " << testInput << endl;
@@ -328,7 +328,7 @@ void test_valid_ignoreErrors_27(bool ignoreError) {
 
 void test_valid_ignoreErrors_28(bool ignoreError) {
    string testInput = "(1+(2*3";
-   cout << "==== Running test28 : ====" << endl;
+   cout << "==== Running test ignoreError 28 : ====" << endl;
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
    cout << "Processing expression: " << testInput << endl;
@@ -339,7 +339,7 @@ void test_valid_ignoreErrors_28(bool ignoreError) {
 
 void test_valid_29(bool ignoreError) {
    string testInput = "1";
-   cout << "==== Running test29 : ====" << endl;
+   cout << "==== Running test 29 : ====" << endl;
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
    cout << "Processing expression: " << testInput << endl;
@@ -350,7 +350,7 @@ void test_valid_29(bool ignoreError) {
 
 void test_valid_30(bool ignoreError) {
    string testInput = "1+2+3";
-   cout << "==== Running test30 : ====" << endl;
+   cout << "==== Running test 30 : ====" << endl;
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
    cout << "Processing expression: " << testInput << endl;
