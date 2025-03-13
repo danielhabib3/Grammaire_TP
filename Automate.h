@@ -16,9 +16,9 @@ class Etat;
 
 class Automate {
     public:
-        Automate(Lexer* l, bool t, bool i) : lexer(l), erreur(false), trace(t), ignoreErrors(i) {
+        Automate(Lexer* l, bool t, bool i) : lexer(l), erreur(false), trace(t), ignoreErrors(i), parentesesFermantesManquantes(0) {
             positionErrors = map<int,vector<string>>();
-            chaineLue = string("");
+            chaineLue = string(""); 
         };
         virtual ~Automate();
         void decalage(Symbole * s, Etat * e);
@@ -35,7 +35,7 @@ class Automate {
         void setChaineLue(string c) {chaineLue = c;};
         void addErreur(int pos, vector<string> symboles) {positionErrors[pos] = symboles;};
         bool getTrace() {return trace;};
-        void setParentesesFermantesManquantes(bool p) {parentesesFermantesManquantes = p;};
+        void addParenteseManquante() {parentesesFermantesManquantes++;};
     
     private:
         Lexer * lexer;
@@ -48,5 +48,5 @@ class Automate {
         // La clé c'est la position de l'erreur et la valeur c'est une liste de symboles
         // le premier de la liste c'est le symbole trouvé et les autres ce sont les symbole attendus
         map<int,vector<string>> positionErrors;
-        bool parentesesFermantesManquantes;
+        int parentesesFermantesManquantes;
 };

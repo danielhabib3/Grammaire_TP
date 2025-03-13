@@ -95,32 +95,39 @@ void Automate::lecture() {
         cout << endl;
     }
 
-    if(symboles.size() > 1 && *s == FIN && parentesesFermantesManquantes && ignoreErrors) {
+    
+    if(symboles.size() == 1 && *s == FIN && accept) {
         cout << "Valeur de l'expression: " << ((Expr *) symboles.back())->getValue() << endl;
         cout << "Expression evaluée: " << chaineLue;
-        for(int k = 0; k < static_cast<int>(symboles.size()-1); k++) {
-            cout << ")";
+        if(ignoreErrors) {
+            for(int i = 0; i < parentesesFermantesManquantes; i++) {
+                cout << ")";
+            }
         }
         cout << endl;
     }
-    
-    if(symboles.size() == 1 && *s == FIN) {
-        cout << "Valeur de l'expression: " << ((Expr *) symboles.back())->getValue() << endl;
-        cout << "Expression evaluée: " << chaineLue << endl;
+
+    if(!accept && ignoreErrors) {
     }
 
     if(positionErrors.size() > 0) {
-        cout << positionErrors.size() << " Erreur(s) de syntaxe trouvée(s) : " << endl;
+        if(!accept && ignoreErrors)
+            cout << "Erreur de syntaxe trouvée : " << endl;
+        else
+            cout << positionErrors.size() << " Erreur(s) de syntaxe trouvée(s) : " << endl;
+
         for(auto it = positionErrors.begin(); it != positionErrors.end(); it++) {
-            cout << "    Erreur à la position " << it->first << ", " << (it->second)[0] << " trouvé alors que ";
-            for(int j = 1; j < static_cast<int>(it->second.size()); j++) {
-                cout << (it->second)[j];
-                if(j == static_cast<int>(it->second.size()-2)) {
-                    cout << " OU ";
-                } else if(j == static_cast<int>(it->second.size()-1)) {
-                    cout << " attendus." << endl;
-                } else {
-                    cout << ", ";
+            if((!(!accept && ignoreErrors))||(it == positionErrors.begin())) {
+                cout << "    Erreur à la position " << it->first << ", " << (it->second)[0] << " trouvé alors que ";
+                for(int j = 1; j < static_cast<int>(it->second.size()); j++) {
+                    cout << (it->second)[j];
+                    if(j == static_cast<int>(it->second.size()-2)) {
+                        cout << " OU ";
+                    } else if(j == static_cast<int>(it->second.size()-1)) {
+                        cout << " attendus." << endl;
+                    } else {
+                        cout << ", ";
+                    }
                 }
             }
         }

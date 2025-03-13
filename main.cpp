@@ -417,7 +417,7 @@ void test_invalid_4(bool ignoreError) {
 
 void test_invalid_5(bool ignoreError) {
    string testInput = "1+";	
-   cout << "==== Running test_invalid_4: ====" << endl;
+   cout << "==== Running test_invalid_5: ====" << endl;
 
    Lexer l(testInput);
    Automate automate(&l, false, ignoreError);
@@ -453,7 +453,7 @@ void test_invalid_7(bool ignoreError) {
    cout << "Processing expression: " << testInput << endl;
    automate.lecture();
 
-   cout << "Attendu : Erreur à la position 2" << endl;
+   cout << "Attendu : Erreur à la position 2 et 3" << endl;
    cout << "==== Test_invalid_7 finished ====" << endl << endl;
 }
 
@@ -467,7 +467,7 @@ void test_invalid_8(bool ignoreError) {
    cout << "Processing expression: " << testInput << endl;
    automate.lecture();
 
-   cout << "Attendu : Erreur à la position 2" << endl;
+   cout << "Attendu : Erreur à la position 2 et 3" << endl;
    cout << "==== Test_invalid_8 finished ====" << endl << endl;
 }
 
