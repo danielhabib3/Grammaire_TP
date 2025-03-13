@@ -46,49 +46,77 @@ make
 ```sh
 ./mon_programme -exec "(1+2)*3"
 ```
-
-#### Exécution des tests :
-```sh
-./mon_programme -test
-```
-
 #### Mode verbose (trace des transitions) :
 ```sh
 ./mon_programme -t -exec "(4+5)*6"
 ```
 
-#### Mode ignorer les erreurs, reprise eventuelle d'analyse si erreur syntaxique trouvée (trace des transitions) :
+#### Mode ignorer les erreurs, reprise eventuelle d'analyse si erreur syntaxique trouvée (avec trace des erreurs trouvées) :
 ```sh
 ./mon_programme -i -exec "(4++5)*6"
 ```
+#### Exécution des tests (38 tests) :
+```sh
+./mon_programme -test
+```
+**remarques** Les tests sont executés automatiquement avec l'option '-i', même si vous ne la choisissez pas```
+
+#### Remarques
 
 Vous pouvez également combiner les options `-t` et `-i` pour afficher les traces et ignorer les erreurs.
 
 Mais vous ne pouvez pas combiner les options `-test` et `-exec`.
 
-## Exemples d'entrées invalides
+De plus, les tests sont toujours executés sans l'option '-t' (car sinon cela générerait trop de texte (38 tests)) et avec l'option '-i'. 
 
-Dans ce cas là "(4++5)*6" si on ne met pas l'option -i, le programme s'arrete à la première erreur syntaxique rencontrée. Si on met l'option -i, le programme continue l'analyse de l'expression jusqu'à la fin en ignorant le deuxième +. Le programme affiche les erreurs rencontrées ainsi que l'expression qui a été évaluée.
+## Choix dans le traitement des expressions arithmétiques avec erreur(s) de syntaxe (-i)
 
-Dans les cas où il y a des erreurs et que l'option -i est activée, le programme affiche les erreurs rencontrées et l'expression qui a été évaluée.
-La logique qu'on a utilisé est la suivante : si une erreur est rencontrée, on continue l'analyse de l'expression jusqu'à la fin en ignorant les erreurs rencontrées. Si l'expression est correcte, on l'évalue.
+### Sans l'option -i
 
-## Exemples d'entrées valides
+Si l'expression arithmétique est syntaxiquement incorrecte alors le programme arrête l'analyse à la première erreur et affiche une erreur
 
-- `(5+3)*2`
-- `1+2*3`
-- `10+20*30`
-- `(8*3)+4`
-- `7*(6+5)`
+**Exemples :** "(4++5)*6" est syntaxiquement incorrecte car il y a deux '+' qui se suivent
 
-## Gestion des erreurs
+### Avec l'option -i
 
-Si une expression incorrecte est détectée, l’analyseur affiche la position et le type d’erreur rencontrée.
+Si on met l'option -i, le programme continue l'analyse de l'expression jusqu'à la fin en ignorant les potentielles erreurs (que l'on a traitées) rencontrées. Le programme affiche les erreurs rencontrées ainsi que l'expression qui a été évaluée. Pour chaque erreur, l’analyseur affiche la position et le type d’erreur rencontrée.
 
-Exemple :
-```
-Erreur à la position 2 : ')' trouvé alors que 'INT' attendu.
-```
+**Exemples :** "(4++5)*6" :
+
+Processing expression: (4++5)*6 <br/>
+Accepté <br/>
+Valeur de l'expression: 54  <br/>
+Expression evaluée: (4+5)*6 <br/>
+1 Erreur(s) de syntaxe trouvée(s) : <br/>
+Erreur à la position 4, PLUS trouvé alors que INT OU OPENPAR attendus. 
+
+#### Erreurs syntaxiques traitées et choix (cf : Tests)
+
+| Description erreur traitée                                       | Choix réalisé pour continuer l'analyse        | Exemple entrée        | Résultat attendu            |
+|----------------------------------------------------------------|----------------------------------------|----------------|--------------------|
+| Double opérateur `**`                                          | Ignorer le second opérateur : Remplacer `**` par `*`                | `1**2`         | `(1*2) = 2`        |
+| Double opérateur `++`                                          | Ignorer le second opérateur : Remplacer `++` par `+`                | `1++2`         | `1 + 2 = 3`        |
+| Double opérateur `**` et `++`                                  | Ignorer le second opérateur : Remplacer `**` par `*` et `++` par `+` | `(1**2)++3`   | `(1*2) + 3 = 5`   |
+| Parenthèse ouverte après expression                                 | Ignorer la parenthèse ouverte         | `1+2(`         | `1 + 2 = 3`        |
+| Parenthèse ouverte au milieu de l'expression       | Ignorer la parenthèse ouverte         | `(1+2()`      | `(1 + 2) = 3`     |
+| Caractère invalide                                             | Ignorer le caractère invalide `y`     | `(1+2y)`      | `(1 + 2) = 3`     |
+| Parenthèse(s) non fermée(s)                               | Fermer la/les parenthèse(s) ouverte(s) non fermée(s)| `((1+2`        | `((1 + 2)) = 3`   |
+| Parenthèse ouverte non fermée dans une expression imbriquée  | Fermer la/les parenthèse(s) ouverte(s) non fermée | `(1+(2*3`     | `(1+(2*3)) = 7`   |
+| Opérateur en début d'expression et parenthèse fermante en trop et double opérateur | Ignorer l'opérateur en début d'expression  et la parenthèse fermante en trop | `+()1**2)`     | `(1*2) = 2`        |
+
+
+#### Exemples d'erreurs non traitées (même avec -i)
+
+| Description erreur non traitée                              | Exemple entrée| Résultat attendu         |
+|----------------------------------------------------|----------|--------------------|
+| Expression vide                                       | `""`        | Erreur à la position 1 |
+| Parenthèses vides                                   | `()`       | Erreur à la position 2 |
+| Parenthèse ouvrante non fermée               | `(`         | Erreur à la position 2 |
+| Parenthèse fermante sans ouverture           | `)`         | Erreur à la position 1 |
+| Opérateur en fin d'expression  (sans opérande après)       | `1+`       | Erreur à la position 3 |
+| Opérateur `-` non supporté                           | `1-2`      | Erreur à la position 2 et 3 |
+| Opérateur `^` non supporté                           | `1^2`      | Erreur à la position 2 et 3 |
+| Opérateur `+` après une multiplication             | `1*2+`    | Erreur à la position 5 |
 
 ## Auteurs
 Groupe 3 H4231
