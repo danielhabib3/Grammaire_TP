@@ -24,9 +24,9 @@ $(EXEC): $(OBJ)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Nettoyage des fichiers compilés
-clean:
+clean_comp:
 	rm -f $(OBJ) $(EXEC)
 
 # Nettoyage complet
-mrproper: clean
+clean: clean_comp
 	rm -f *~

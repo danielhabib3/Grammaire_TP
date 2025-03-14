@@ -30,6 +30,11 @@ Utilisez la commande suivante pour compiler le projet :
 ```sh
 make
 ```
+Pour nettoyer
+
+```sh
+make clean
+```
 
 ### Exécution
 
