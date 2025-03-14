@@ -50,6 +50,7 @@ make
 ```sh
 ./mon_programme -t -exec "(4+5)*6"
 ```
+Remarque: -exec <expr> doit être le dernier argument
 
 #### Mode ignorer les erreurs, reprise eventuelle d'analyse si erreur syntaxique trouvée (avec trace des erreurs trouvées) :
 ```sh
@@ -101,7 +102,9 @@ Erreur à la position 4, PLUS trouvé alors que INT OU OPENPAR attendus.
 | Double opérateur `**` et `++`                                  | Ignorer le second opérateur : Remplacer `**` par `*` et `++` par `+` | `(1**2)++3`   | `(1*2) + 3 = 5`   |
 | Parenthèse ouverte après expression                                 | Ignorer la parenthèse ouverte         | `1+2(`         | `1 + 2 = 3`        |
 | Parenthèse ouverte au milieu de l'expression       | Ignorer la parenthèse ouverte         | `(1+2()`      | `(1 + 2) = 3`     |
-| Caractère invalide                                             | Ignorer le caractère invalide `y`     | `(1+2y)`      | `(1 + 2) = 3`     |
+| Caractère invalide                                             | Ignorer le caractère invalide `y` et les entiers après    | `(1+2y)`      | `(1 + 2) = 3`     |
+| Caractère invalide                                             | Ignorer le caractère invalide `y` et les entiers après    | `(1+2y3)`      | `(1 + 2) = 3`     |
+
 | Parenthèse(s) non fermée(s)                               | Fermer la/les parenthèse(s) ouverte(s) non fermée(s)| `((1+2`        | `((1 + 2)) = 3`   |
 | Parenthèse ouverte non fermée dans une expression imbriquée  | Fermer la/les parenthèse(s) ouverte(s) non fermée | `(1+(2*3`     | `(1+(2*3)) = 7`   |
 | Opérateur en début d'expression et parenthèse fermante en trop et double opérateur | Ignorer l'opérateur en début d'expression  et la parenthèse fermante en trop | `+()1**2)`     | `(1*2) = 2`        |
@@ -116,8 +119,6 @@ Erreur à la position 4, PLUS trouvé alors que INT OU OPENPAR attendus.
 | Parenthèse ouvrante non fermée               | `(`         | Erreur à la position 2 |
 | Parenthèse fermante sans ouverture           | `)`         | Erreur à la position 1 |
 | Opérateur en fin d'expression  (sans opérande après)       | `1+`       | Erreur à la position 3 |
-| Opérateur `-` non supporté                           | `1-2`      | Erreur à la position 2 et 3 |
-| Opérateur `^` non supporté                           | `1^2`      | Erreur à la position 2 et 3 |
 | Opérateur `+` après une multiplication             | `1*2+`    | Erreur à la position 5 |
 
 ## Auteurs
